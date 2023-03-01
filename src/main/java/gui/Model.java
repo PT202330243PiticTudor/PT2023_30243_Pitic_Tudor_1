@@ -1,15 +1,12 @@
 package gui;
 
 import exceptions.InvalidInputException;
+import lombok.NoArgsConstructor;
 import model.Monomial;
 import model.Polynomial;
 import operations.Operations;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+@NoArgsConstructor
 public class Model {
     private Polynomial poly;
     private final char variable = 'x';
@@ -132,7 +129,7 @@ public class Model {
         return monomialsStrings;
     }
 
-    public Polynomial convertString2Polynomial(String inputPolynomial) {
+    private Polynomial convertString2Polynomial(String inputPolynomial) {
         // CONVERSION:
         // get a string of monomials
         // for each monomial string:
@@ -156,23 +153,21 @@ public class Model {
     }
 
     private String setOutputString() {
-        String output = null;
+        StringBuilder output = null;
         for(Integer k : poly.getPoly().keySet()){
             if(output == null) {
-                output = poly.getPoly().get(k).getCoefficient() + "x^"
-                        + poly.getPoly().get(k).getDegree();
+                output = new StringBuilder(poly.getPoly().get(k).getCoefficient() + "x^"
+                        + poly.getPoly().get(k).getDegree());
             }
             else if(poly.getPoly().get(k).getCoefficient() < 0.0 || (output == null && poly.getPoly().get(k).getCoefficient() < 0.0f)){
-                output += " " + poly.getPoly().get(k).getCoefficient() + "x^"
-                        + poly.getPoly().get(k).getDegree();
+                output.append(" ").append(poly.getPoly().get(k).getCoefficient()).append("x^").append(poly.getPoly().get(k).getDegree());
             }
             else {
-                output += " + " + poly.getPoly().get(k).getCoefficient() + "x^"
-                        + poly.getPoly().get(k).getDegree();
+                output.append(" + ").append(poly.getPoly().get(k).getCoefficient()).append("x^").append(poly.getPoly().get(k).getDegree());
             }
         }
 
         System.out.println("output var is: " + output);
-        return output;
+        return output.toString();
     }
 }

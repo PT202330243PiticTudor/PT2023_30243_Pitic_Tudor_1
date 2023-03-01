@@ -1,12 +1,10 @@
 package operations;
 
-import model.*;
+import model.Monomial;
+import model.Polynomial;
 
 public abstract class Operations {
     public static Polynomial add(Polynomial poly1, Polynomial poly2) {
-//        System.out.println("poly1 degree: " + poly1.getDegree());
-//        System.out.println("poly2 degree: " + poly2.getDegree());
-
         Polynomial finalPoly = new Polynomial();
         finalPoly.setPoly(poly1.getPoly());
         for (Integer k : poly2.getPoly().keySet()) {

@@ -2,10 +2,8 @@ package model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 @Getter
@@ -16,13 +14,18 @@ public class Polynomial {
     private Integer degree;
 
     public Polynomial(){
-        this.poly = new TreeMap<Integer, Monomial>();
+        this.poly = new TreeMap<>();
         this.degree = 0;
     }
 
     public Polynomial(Polynomial polynomial){
         this.poly = polynomial.getPoly();
         this.degree = polynomial.getDegree();
+    }
+
+    public Polynomial(TreeMap<Integer, Monomial> poly){
+        this.poly = poly;
+        this.updateDegree();
     }
 
     public void updateDegree(){
@@ -47,14 +50,21 @@ public class Polynomial {
         this.poly.clear();
     }
 
-    public void printPoly() {
+    public String toString() {
+        String polyString = "";
         for(Integer k : this.poly.keySet()) {
             if(this.poly.get(k).getDegree() < 0.0f){
-                System.out.print(" - " + this.poly.get(k).getCoefficient() + "x^" + this.poly.get(k).getDegree());
+                polyString = " - " + this.poly.get(k).getCoefficient() + "x^" + this.poly.get(k).getDegree();
             }
-            else
-                System.out.print(" + " + this.poly.get(k).getCoefficient() + "x^" + this.poly.get(k).getDegree());
+            else {
+                polyString = " + " + this.poly.get(k).getCoefficient() + "x^" + this.poly.get(k).getDegree();
+            }
         }
-        System.out.println(" ");
+//        polyString = polyString.replaceAll("^ \\+ ", "");
+        return polyString;
+    }
+
+    public void printPoly() {
+        System.out.println(this);
     }
 }
